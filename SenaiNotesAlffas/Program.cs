@@ -1,6 +1,3 @@
-using SenaiNotesAlffas.Interfaces;
-using SenaiNotesAlffas.Repositories;
-
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -8,6 +5,9 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
 
+builder.Services.AddDbContext<NoteSenaiContext>();
+builder.Services.AddTransient<IAnotacaoRepository, AnotacaoRepository>();
+//builder.Services.AddTransient<ITagRepository, TagRepository>();
 //builder.Services.AddDbContext<NoteSenaiContext>();
 //builder.Services.AddTransient<IAnotacaoRepository, AnotacaoRepository>();
 //builder.Services.AddTransient<ITagRepository, TagRepository>();
