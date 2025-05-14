@@ -4,12 +4,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
-/*
-builder.Services.AddDbContext<NoteSenaiContext>();
-builder.Services.AddTransient<IAnotacaoRepository, AnotacaoRepository>();
-builder.Services.AddTransient<ITagRepository, TagRepository>();
-builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
-*/
+
+//builder.Services.AddDbContext<NoteSenaiContext>();
+//builder.Services.AddTransient<IAnotacaoRepository, AnotacaoRepository>();
+//builder.Services.AddTransient<ITagRepository, TagRepository>();
+//builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+
 
 var app = builder.Build();
 

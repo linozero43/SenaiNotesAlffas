@@ -51,11 +51,11 @@ public partial class NoteSenaiContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
 
-            entity.HasOne(d => d.IdtagNavigation).WithMany(p => p.Anotacos)
+            entity.HasOne(d => d.IdtagNavigation).WithMany(p => p.Anotacoes)
                 .HasForeignKey(d => d.Idtag)
                 .HasConstraintName("FK__Anotacoes__IDTag__412EB0B6");
 
-            entity.HasOne(d => d.IdusuarioNavigation).WithMany(p => p.Anotacos)
+            entity.HasOne(d => d.IdusuarioNavigation).WithMany(p => p.Anotacoes)
                 .HasForeignKey(d => d.Idusuario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Anotacoes__IDUsu__403A8C7D");
