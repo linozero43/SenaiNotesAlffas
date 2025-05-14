@@ -1,3 +1,6 @@
+using SenaiNotesAlffas.Interfaces;
+using SenaiNotesAlffas.Repositories;
+
 using SenaiNotesAlffas.Context;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Repositories;
@@ -12,6 +15,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<NoteSenaiContext>();
 builder.Services.AddTransient<IAnotacaoRepository, AnotacaoRepository>();
 //builder.Services.AddTransient<ITagRepository, TagRepository>();
+//builder.Services.AddDbContext<NoteSenaiContext>();
+//builder.Services.AddTransient<IAnotacaoRepository, AnotacaoRepository>();
+builder.Services.AddTransient<ITagRepository, TagRepository>();
 //builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 
 
