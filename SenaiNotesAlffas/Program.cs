@@ -16,6 +16,22 @@ builder.Services.AddTransient<IAnotacaoRepository, AnotacaoRepository>();
 builder.Services.AddTransient<ITagRepository, TagRepository>();
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepositoy>();
 
+builder.Services.AddCors(
+    options =>
+    {
+        options.AddPolicy(
+            name:"minhasOrigens",
+            policy =>
+            {
+                //TODO: Alterar link
+                policy.WithOrigins("http://localhost:5500");
+                policy.AllowAnyHeader();
+                policy.AllowAnyMethod();
+            }
+        );
+    }
+);
+
 builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -34,15 +50,16 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-app.UseSwagger();
+app.UseCors("minhasOrigens");
 
+app.MapControllers();
+
+app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
     options.RoutePrefix = string.Empty;
 });
-
-app.MapControllers();
 
 app.UseAuthentication();
 
