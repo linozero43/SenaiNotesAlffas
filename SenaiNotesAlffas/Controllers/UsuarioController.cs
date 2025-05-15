@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
 using SenaiNotesAlffas.Repositories;
@@ -37,7 +38,7 @@ namespace SenaiNotesAlffas.Controllers
         }
 
         [HttpPost]
-        public IActionResult Cadastrar(Usuario usuario)
+        public IActionResult Cadastrar(CadastrarUsuarioDto usuario)
         {
             _repository.Cadastrar(usuario);
             return Created();

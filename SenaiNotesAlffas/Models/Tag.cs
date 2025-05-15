@@ -11,5 +11,4 @@ public partial class Tag
 
     public virtual ICollection<Anotacao> Anotacoes { get; set; } = new List<Anotacao>();
 
-    public virtual Anotacao IdanotacoesNavigation { get; set; } = null!;
 }

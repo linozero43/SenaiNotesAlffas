@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
 
@@ -26,7 +27,7 @@ namespace SenaiNotesAlffas.Controllers
             return Ok(_tagRepository.BuscarTagPorNome(nome));
         }
         [HttpPost]
-        public IActionResult CadastrarTag(Tag tag)
+        public IActionResult CadastrarTag(CadastrarTagDto tag)
         {
             //1-Coloco o Produto no Banco de Dados
             _tagRepository.Cadastrar(tag);

@@ -31,6 +31,7 @@ builder.Services.AddCors(
         );
     }
 );
+
 builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -59,8 +60,6 @@ app.UseSwaggerUI(options =>
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
     options.RoutePrefix = string.Empty;
 });
-
-app.MapControllers();
 
 app.UseAuthentication();
 

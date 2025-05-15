@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SenaiNotesAlffas.Context;
+using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
 
@@ -38,9 +39,12 @@ namespace SenaiNotesAlffas.Repositories
             return listaTags;
         }
 
-        public void Cadastrar(Tag tag)
+        public void Cadastrar(CadastrarTagDto tag)
         {
-            _context.Tags.Add(tag);
+            Tag novaTag = new Tag
+            {
+                Nome = tag.Nome,
+            };
         }
 
         public void Deletar(int id)
