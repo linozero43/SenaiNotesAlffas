@@ -1,6 +1,9 @@
 ﻿using SenaiNotesAlffas.Context;
+using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
+using SenaiNotesAlffas.Services;
+using SenaiNotesAlffas.ViewModels;
 
 namespace SenaiNotesAlffas.Repositories
 {
@@ -32,9 +35,21 @@ namespace SenaiNotesAlffas.Repositories
 
         }
 
-        public void Cadastrar(Usuario usuario)
+        public void Cadastrar(CadastrarUsuarioDto usuario)
         {
-            _context.Usuarios.Add(usuario);
+            var password = new PasswordService();
+
+            Usuario usuarioCadastrado = new Usuario
+            {
+                Nome = usuario.Nome,
+                Email = usuario.Email,
+                Telefone = usuario.Telefone,
+                Senha = usuario.Senha
+            };
+
+            usuarioCadastrado.Senha = password.HashPassword(usuarioCadastrado);
+
+            _context.Usuarios.Add(usuarioCadastrado);
             _context.SaveChanges();
         }
 
@@ -53,14 +68,34 @@ namespace SenaiNotesAlffas.Repositories
             return usuarioEncontrado;
         }
 
-        public Usuario? ListarPorId(int id)
+        public ListarUsuarioViewModel? ListarPorId(int id)
         {
-            return _context.Usuarios.FirstOrDefault(u => u.Idusuario == id);    
+            var usuario = _context.Usuarios.Find(id);
+            if (usuario == null)
+            {
+                return null;
+            }
+
+            var usuarioId =  new ListarUsuarioViewModel
+            {
+                Idusuario = usuario.Idusuario,
+                Nome = usuario.Nome,
+                Telefone = usuario.Telefone,
+                Email = usuario.Email
+            };
+
+            return usuarioId;
         }
 
-        public List<Usuario> ListarTodos()
+        public List<ListarUsuarioViewModel> ListarTodos()
         {
-            return _context.Usuarios.ToList();
+            return _context.Usuarios.Select(u => new ListarUsuarioViewModel
+            {
+                Idusuario = u.Idusuario,
+                Nome = u.Nome,
+                Telefone = u.Telefone,
+                Email = u.Email
+            }).ToList();
         }
     }
 }
