@@ -1,17 +1,19 @@
-﻿using SenaiNotesAlffas.Models;
+﻿using SenaiNotesAlffas.DTO;
+using SenaiNotesAlffas.Models;
+using SenaiNotesAlffas.ViewModels;
 
 namespace SenaiNotesAlffas.Interfaces
 {
     public interface IUsuarioRepository
     {
-        List<Usuario> ListarTodos();
+        List<ListarUsuarioViewModel> ListarTodos();
 
-        void Cadastrar (Usuario usuario);
+        void Cadastrar (CadastrarUsuarioDto usuario);
 
         Usuario? Atualizar(int id, Usuario usuario);
 
         Usuario? Deletar (int id);
 
-        Usuario? ListarPorId(int id);
+        ListarUsuarioViewModel? ListarPorId(int id);
     }
 }

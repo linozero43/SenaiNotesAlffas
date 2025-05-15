@@ -56,5 +56,23 @@ namespace SenaiNotesAlffas.Controllers
 
             return Ok(usuarioAtualizado);
         }
+
+
+        [HttpDelete("{id}")]
+
+        public IActionResult Deletar(int id)
+        {
+            var usuarioDeletado = _repository.Deletar(id);
+
+            if (usuarioDeletado == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(usuarioDeletado);
+
+
+        }
     }
+
 }
