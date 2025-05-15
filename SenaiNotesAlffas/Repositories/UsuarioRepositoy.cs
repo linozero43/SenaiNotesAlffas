@@ -16,7 +16,7 @@ namespace SenaiNotesAlffas.Repositories
             _context = context;
         }
 
-        public Usuario? Atualizar(int id, Usuario usuario)
+        public Usuario? Atualizar(int id, CadastrarUsuarioDto usuario)
         {
             var usuarioEncontrado = _context.Usuarios.Find(id);
 

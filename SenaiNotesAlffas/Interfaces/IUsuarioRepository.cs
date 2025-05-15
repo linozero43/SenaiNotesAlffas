@@ -10,7 +10,7 @@ namespace SenaiNotesAlffas.Interfaces
 
         void Cadastrar (CadastrarUsuarioDto usuario);
 
-        Usuario? Atualizar(int id, Usuario usuario);
+        Usuario? Atualizar(int id, CadastrarUsuarioDto usuario);
 
         Usuario? Deletar (int id);
 
