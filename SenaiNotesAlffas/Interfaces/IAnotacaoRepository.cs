@@ -12,7 +12,6 @@ namespace SenaiNotesAlffas.Interfaces
 
         void Atualuzar(int id, Anotacao amotacao);
 
- 
         void Deletar(int id);
         List<Anotacao> BuscarAnotacaoPorNome(string nome);
     }
