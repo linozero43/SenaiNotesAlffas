@@ -5,6 +5,7 @@ namespace SenaiNotesAlffas.Models;
 
 public partial class Anotacao
 {
+
     public int Idanotacoes { get; set; }
 
     public int Idusuario { get; set; }

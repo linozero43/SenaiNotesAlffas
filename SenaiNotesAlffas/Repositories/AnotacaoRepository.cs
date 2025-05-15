@@ -13,37 +13,66 @@ namespace SenaiNotesAlffas.Repositories
             _context = context;
         }
 
-        public void Atualuzar(int id, Anotacao amotacao)
+        public Anotacao? Atualuzar(int id, Anotacao anotacao)
         {
-            throw new NotImplementedException();
+            var anotacaoEncontrada = _context.Anotacoes.FirstOrDefault(c =>
+            c.Idanotacoes == id);
+
+            if (anotacaoEncontrada == null) return null;
+
+            anotacaoEncontrada.Titulo = anotacao.Titulo;
+
+            _context.SaveChanges();
+            return anotacaoEncontrada;
         }
 
         public List<Anotacao> BuscarAnotacaoPorNome(string nome)
         {
-            throw new NotImplementedException();
+            {
+                var listaAnotacoes = _context.Anotacoes.Where( n => n.Titulo == nome).ToList();
+
+                return listaAnotacoes;
+            }
         }
 
-        public Anotacao BuscarData(string data)
+        public Anotacao BuscarData(DateTime data)
         {
             throw new NotImplementedException();
         }
 
         public Anotacao BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            return _context.Anotacoes.FirstOrDefault(a => a.Idanotacoes == id);
         }
 
         public void Cadastrar(Anotacao anotacao)
         {
-            throw new NotImplementedException();
+            _context.Anotacoes.Add(anotacao);
+
+            _context.SaveChanges();
         }
 
-        public void Deletar(int id)
+        public object? Deletar(int id)
+        {
+            var categoria = _context.Anotacoes.Find(id);
+            if (categoria == null) return null;
+            return categoria;
+        }
+
+        public List<Anotacao> ListarTodos()
+        {
+            {
+                return _context.Anotacoes.ToList();
+            }
+
+        }
+
+        void IAnotacaoRepository.Atualuzar(int id, Anotacao amotacao)
         {
             throw new NotImplementedException();
         }
 
-        public List<Anotacao> ListarTodos()
+        void IAnotacaoRepository.Deletar(int id)
         {
             throw new NotImplementedException();
         }

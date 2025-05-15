@@ -2,8 +2,7 @@ using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Repositories;
 
 using SenaiNotesAlffas.Context;
-using SenaiNotesAlffas.Interfaces;
-using SenaiNotesAlffas.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
