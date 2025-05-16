@@ -11,14 +11,25 @@ namespace SenaiNotesAlffas.Controllers
     [ApiController]
     public class AnotacaoController : ControllerBase
     {
+
         private readonly NoteSenaiContext _context;
+
         private readonly IAnotacaoRepository _anotacaoRepository;
 
-        public AnotacaoController(NoteSenaiContext context)
+        public AnotacaoController(IAnotacaoRepository anotacaoRepository)
         {
-            _context = context;
-            _anotacaoRepository = new AnotacaoRepository(_context);
+            _anotacaoRepository = anotacaoRepository;
         }
+
+        //POST
+        [HttpPost]
+
+        public IActionResult CadastrarAnotacao(Anotacao anotacao)
+        {
+            _anotacaoRepository.Cadastrar(anotacao);
+            return Created();
+        }
+
 
         [HttpGet("/buscar{nome}")]
         public IActionResult BuscarPornome(string nome)
@@ -39,15 +50,7 @@ namespace SenaiNotesAlffas.Controllers
             return Ok(_anotacaoRepository.ListarTodos());
         }
 
-        //POST
-        [HttpPost]
-
-        public IActionResult CadastrarAnotacao(Anotacao anotacao)
-        {
-            object? anotacao1 = null;
-            _anotacaoRepository.Cadastrar(anotacao);
-            return Created();
-        }
+        
 
 
     }

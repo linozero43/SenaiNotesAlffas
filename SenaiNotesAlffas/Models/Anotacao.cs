@@ -26,5 +26,5 @@ public partial class Anotacao
 
     public virtual Tag? IdtagNavigation { get; set; }
 
-    public virtual Usuario IdusuarioNavigation { get; set; } = null!;
+    public virtual Usuario? IdusuarioNavigation { get; set; } = null!;
 }

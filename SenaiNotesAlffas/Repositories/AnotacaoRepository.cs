@@ -5,14 +5,9 @@ using SenaiNotesAlffas.Models;
 
 namespace SenaiNotesAlffas.Repositories
 {
-    public class AnotacaoRepository : IAnotacaoRepository
+    public class AnotacaoRepository(NoteSenaiContext context) : IAnotacaoRepository
     {
-        private readonly NoteSenaiContext _context;
-
-        public AnotacaoRepository (NoteSenaiContext context)
-        {
-            _context = context;
-        }
+        private readonly NoteSenaiContext _context = context;
 
         public Anotacao? Atualuzar(int id, Anotacao anotacao)
         {
