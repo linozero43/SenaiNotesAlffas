@@ -11,9 +11,12 @@ public partial class NoteSenaiContext : DbContext
     {
     }
 
-    public NoteSenaiContext(DbContextOptions<NoteSenaiContext> options)
+    private IConfiguration _configuration;
+
+    public NoteSenaiContext(DbContextOptions<NoteSenaiContext> options ,IConfiguration config)
         : base(options)
     {
+        _configuration = config;
     }
 
     public virtual DbSet<Anotacao> Anotacoes { get; set; }
@@ -22,9 +25,11 @@ public partial class NoteSenaiContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
-        => optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=NoteSenai;User Id=sa;Password=Senai@134;TrustServerCertificate=true;");
-
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var con = _configuration.GetConnectionString("DefaultConnection");
+        optionsBuilder.UseSqlServer("con");
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Anotacao>(entity =>
