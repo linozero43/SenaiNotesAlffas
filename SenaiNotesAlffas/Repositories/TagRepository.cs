@@ -3,6 +3,7 @@ using SenaiNotesAlffas.Context;
 using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
+using SenaiNotesAlffas.ViewModels;
 
 namespace SenaiNotesAlffas.Repositories
 {
@@ -15,7 +16,7 @@ namespace SenaiNotesAlffas.Repositories
             _context = context;
         }
 
-        public void Atualizar(int id, Tag tag)
+        public void Atualizar(int id, CadastrarTagDto tag)
         {
             Tag ntag = _context.Tags.Find(id);
             if (ntag == null)
@@ -32,19 +33,30 @@ namespace SenaiNotesAlffas.Repositories
             return _context.Tags.FirstOrDefault(t => t.Idtag == id);
         }
 
+        public List<ListarTagViewModel> ListarTodos()
+        {
+            return _context.Tags.Select(t => new ListarTagViewModel
+            {
+                Nome = t.Nome,
+
+            }).ToList();
+        }
+
         public List<Tag> BuscarTagPorNome(string nome)
         {
             //Where - Traz todos que atendem EXATAMENTE uma Condição 
             var listaTags = _context.Tags.Where(t => t.Nome == nome).ToList();
             return listaTags;
         }
-
+        
         public void Cadastrar(CadastrarTagDto tag)
         {
             Tag novaTag = new Tag
             {
                 Nome = tag.Nome,
             };
+            _context.Tags.Add(novaTag);
+            _context.SaveChanges();
         }
 
         public void Deletar(int id)
@@ -60,9 +72,5 @@ namespace SenaiNotesAlffas.Repositories
             _context.SaveChanges();
         }
 
-        public List<Tag> ListarTodos()
-        {
-            return _context.Tags.Include(p => p.Anotacoes).ToList();
-        }
     }
 }

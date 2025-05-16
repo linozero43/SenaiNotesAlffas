@@ -16,16 +16,19 @@ namespace SenaiNotesAlffas.Controllers
         {
             _tagRepository = tag;
         }
+
         [HttpGet]
         public IActionResult Listar()
         {
             return Ok(_tagRepository.ListarTodos());
         }
+
         [HttpGet("/buscar/{nome}")]
         public IActionResult BuscarTagPorNome(string nome)
         {
             return Ok(_tagRepository.BuscarTagPorNome(nome));
         }
+
         [HttpPost]
         public IActionResult CadastrarTag(CadastrarTagDto tag)
         {
@@ -35,8 +38,9 @@ namespace SenaiNotesAlffas.Controllers
             //201-Created
             return Created();
         }
-        [HttpPut("{nome}")]
-        public IActionResult Editar(int id, Tag tag)
+
+        [HttpPut("{id}")]
+        public IActionResult Editar(int id, CadastrarTagDto tag)
         {
             try
             {
@@ -49,6 +53,7 @@ namespace SenaiNotesAlffas.Controllers
             }
 
         }
+
         [HttpDelete("{nome}")]
         public IActionResult Deletar(int tag)
         {
