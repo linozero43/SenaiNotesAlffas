@@ -1,20 +1,22 @@
 ﻿using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Models;
+using SenaiNotesAlffas.ViewModels;
 
 namespace SenaiNotesAlffas.Interfaces
 {
     public interface ITagRepository
     {
-        List<Tag> ListarTodos();
 
         Tag BuscarPorId(int id);
 
+        List<ListarTagViewModel> ListarTodos();
+        List<Tag> BuscarTagPorNome(string nome);
+
         void Cadastrar(CadastrarTagDto tag);
 
-        void Atualizar(int id, Tag tag);
+        void Atualizar(int id, CadastrarTagDto tag);
 
         void Deletar(int id);
 
-        List<Tag> BuscarTagPorNome(string nome);
     }
 }
