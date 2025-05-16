@@ -6,13 +6,11 @@ namespace SenaiNotesAlffas.Interfaces
     {
         List<Anotacao> ListarTodos();
         Anotacao BuscarPorId(int id);
-        Anotacao BuscarData(DateTime data);
-
+        List<Anotacao> BuscarData(DateTime data);
         void Cadastrar(Anotacao anotacao);
-
-        void Atualuzar(int id, Anotacao amotacao);
- 
-        void Deletar(int id);
+        Anotacao? Atualuzar(int id, Anotacao anotacao);
+        public object? Deletar(int id);
         List<Anotacao> BuscarAnotacaoPorNome(string nome);
+        
     }
 }

@@ -1,6 +1,8 @@
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using SenaiNotesAlffas.Context;
+using SenaiNotesAlffas.Interfaces;
+using SenaiNotesAlffas.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);
