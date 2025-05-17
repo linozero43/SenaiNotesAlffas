@@ -28,7 +28,7 @@ public partial class NoteSenaiContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var con = _configuration.GetConnectionString("DefaultConnection");
-        optionsBuilder.UseSqlServer("con");
+        optionsBuilder.UseSqlServer(con);
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

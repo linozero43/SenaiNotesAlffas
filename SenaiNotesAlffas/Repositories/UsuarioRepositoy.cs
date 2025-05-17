@@ -35,6 +35,28 @@ namespace SenaiNotesAlffas.Repositories
 
         }
 
+        public Usuario BuscarPorEmailSenha(string email, string senha)
+        {
+            var usuarioEncontrado = _context.Usuarios.FirstOrDefault(u => u.Email == email);
+
+            if(usuarioEncontrado == null)
+            {
+                return null;
+            }
+
+            var passwordService = new PasswordService();
+
+            //verificar se a senha do usuario retorna o mesmo hash
+            var resultado = passwordService.VerificarSenha(usuarioEncontrado, senha);
+
+            if (resultado == true)
+            {
+                return usuarioEncontrado;
+            }
+
+            return null;
+        }
+
         public void Cadastrar(CadastrarUsuarioDto usuario)
         {
             var password = new PasswordService();
@@ -48,6 +70,9 @@ namespace SenaiNotesAlffas.Repositories
             };
 
             usuarioCadastrado.Senha = password.HashPassword(usuarioCadastrado);
+
+            //TODO: tratar erro quando email cadastrado ja existe, firstordefault
+            //var emailCadastrado = _context.Usuarios.FirstOrDefault
 
             _context.Usuarios.Add(usuarioCadastrado);
             _context.SaveChanges();

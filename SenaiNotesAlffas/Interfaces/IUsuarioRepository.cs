@@ -15,5 +15,7 @@ namespace SenaiNotesAlffas.Interfaces
         Usuario? Deletar (int id);
 
         ListarUsuarioViewModel? ListarPorId(int id);
+
+        Usuario BuscarPorEmailSenha(string email, string senha);
     }
 }

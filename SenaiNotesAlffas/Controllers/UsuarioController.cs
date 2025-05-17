@@ -4,6 +4,7 @@ using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
 using SenaiNotesAlffas.Repositories;
+using SenaiNotesAlffas.Services;
 
 namespace SenaiNotesAlffas.Controllers
 {
@@ -73,6 +74,24 @@ namespace SenaiNotesAlffas.Controllers
             return Ok(usuarioDeletado);
 
 
+        }
+
+        [HttpPost("login")]
+
+        public IActionResult Login(LoginDto login)
+        {
+            var usuario = _repository.BuscarPorEmailSenha(login.Email, login.Senha);
+
+            if (usuario == null)
+            {
+                return Unauthorized("Email ou senha inválidos.");
+            }
+
+            var tokenService = new TokenService();
+
+            var token = tokenService.GenerateToken(usuario.Email);
+
+            return Ok(token);
         }
     }
 
