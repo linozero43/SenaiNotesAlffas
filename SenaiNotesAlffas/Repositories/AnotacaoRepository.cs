@@ -1,17 +1,13 @@
-﻿using SenaiNotesAlffas.Context;
+﻿using Microsoft.VisualBasic;
+using SenaiNotesAlffas.Context;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
 
 namespace SenaiNotesAlffas.Repositories
 {
-    public class AnotacaoRepository : IAnotacaoRepository
+    public class AnotacaoRepository(NoteSenaiContext context) : IAnotacaoRepository
     {
-        private readonly NoteSenaiContext _context;
-
-        public AnotacaoRepository (NoteSenaiContext context)
-        {
-            _context = context;
-        }
+        private readonly NoteSenaiContext _context = context;
 
         public Anotacao? Atualuzar(int id, Anotacao anotacao)
         {
@@ -35,9 +31,11 @@ namespace SenaiNotesAlffas.Repositories
             }
         }
 
-        public Anotacao BuscarData(DateTime data)
+        public List <Anotacao> BuscarData(DateTime data)
         {
-            throw new NotImplementedException();
+            var listaDataAnotacoes = _context.Anotacoes.Where(d => d.CreatedAt == data).ToList();
+
+            return listaDataAnotacoes;
         }
 
         public Anotacao BuscarPorId(int id)
@@ -67,14 +65,5 @@ namespace SenaiNotesAlffas.Repositories
 
         }
 
-        void IAnotacaoRepository.Atualuzar(int id, Anotacao amotacao)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IAnotacaoRepository.Deletar(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
