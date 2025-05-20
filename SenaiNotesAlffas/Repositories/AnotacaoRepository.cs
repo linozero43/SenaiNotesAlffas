@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using SenaiNotesAlffas.Context;
+using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
 
@@ -9,17 +10,38 @@ namespace SenaiNotesAlffas.Repositories
     {
         private readonly NoteSenaiContext _context = context;
 
-        public Anotacao? Atualuzar(int id, Anotacao anotacao)
+        public Anotacao? Atualuzar(int id, CadastrarAnotacaoDto anotacao)
         {
             var anotacaoEncontrada = _context.Anotacoes.FirstOrDefault(c =>
             c.Idanotacoes == id);
 
-            if (anotacaoEncontrada == null) return null;
+            if (anotacaoEncontrada == null)
+            {
+                return null;
+            }
 
+            anotacaoEncontrada.Idusuario = anotacao.Idusuario;
             anotacaoEncontrada.Titulo = anotacao.Titulo;
-
+            anotacaoEncontrada.Texto = anotacao.Texto;
+    
             _context.SaveChanges();
             return anotacaoEncontrada;
+
+        }
+
+        public void Cadastrar(CadastrarAnotacaoDto anotacao)
+        {
+
+            Anotacao anotacaoCadastrada = new()
+            {
+                Idusuario = anotacao.Idusuario,
+                Titulo = anotacao.Titulo,
+                Texto = anotacao.Texto,
+            };
+
+            _context.Anotacoes.Add(anotacaoCadastrada);
+            _context.SaveChanges();
+            
         }
 
         public List<Anotacao> BuscarAnotacaoPorNome(string nome)
@@ -43,12 +65,6 @@ namespace SenaiNotesAlffas.Repositories
             return _context.Anotacoes.FirstOrDefault(a => a.Idanotacoes == id);
         }
 
-        public void Cadastrar(Anotacao anotacao)
-        {
-            _context.Anotacoes.Add(anotacao);
-
-            _context.SaveChanges();
-        }
 
         public object? Deletar(int id)
         {

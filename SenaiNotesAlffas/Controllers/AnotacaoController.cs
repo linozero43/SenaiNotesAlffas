@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SenaiNotesAlffas.Context;
+using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
 using SenaiNotesAlffas.Repositories;
@@ -14,17 +15,19 @@ namespace SenaiNotesAlffas.Controllers
 
         private readonly NoteSenaiContext _context;
 
-        private readonly IAnotacaoRepository _anotacaoRepository;
+        private IAnotacaoRepository _anotacaoRepository;
 
-        public AnotacaoController(IAnotacaoRepository anotacaoRepository)
+        public AnotacaoController(NoteSenaiContext context)
         {
-            _anotacaoRepository = anotacaoRepository;
+            _context = context;
+            _anotacaoRepository = new AnotacaoRepository(_context);
+
         }
 
         //POST
         [HttpPost]
 
-        public IActionResult CadastrarAnotacao(Anotacao anotacao)
+        public IActionResult CadastrarAnotacao(CadastrarAnotacaoDto anotacao)
         {
             _anotacaoRepository.Cadastrar(anotacao);
             return Created();
