@@ -54,7 +54,7 @@ namespace SenaiNotesAlffas.Controllers
 
         }
 
-        [HttpDelete("{nome}")]
+        [HttpDelete("{tag}")]
         public IActionResult Deletar(int tag)
         {
             try

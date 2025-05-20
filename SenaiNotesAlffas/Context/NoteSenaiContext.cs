@@ -11,65 +11,77 @@ public partial class NoteSenaiContext : DbContext
     {
     }
 
-    private IConfiguration _configuration;
-
-    public NoteSenaiContext(DbContextOptions<NoteSenaiContext> options ,IConfiguration config)
+    public NoteSenaiContext(DbContextOptions<NoteSenaiContext> options)
         : base(options)
     {
-        _configuration = config;
     }
 
     public virtual DbSet<Anotacao> Anotacoes { get; set; }
+
+    public virtual DbSet<AuditoriaGeral> AuditoriaGerals { get; set; }
 
     public virtual DbSet<Tag> Tags { get; set; }
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var con = _configuration.GetConnectionString("DefaultConnection");
-        optionsBuilder.UseSqlServer(con);
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=tcp:senainote.database.windows.net,1433;Initial Catalog=NoteSenai;Persist Security Info=False;User ID=backend;Password=senai@134;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Anotacao>(entity =>
         {
-            entity.HasKey(e => e.Idanotacoes).HasName("PK__Anotacoe__1387B2522413DE93");
+            entity.HasKey(e => e.Idanotacoes).HasName("PK__Anotacoe__1387B252ED3CFAF8");
 
             entity.Property(e => e.Idanotacoes).HasColumnName("IDAnotacoes");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+            entity.Property(e => e.AtualizadorAt).HasColumnType("datetime");
+            entity.Property(e => e.CriadorAt).HasColumnType("datetime");
             entity.Property(e => e.Idstatus)
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("IDStatus");
             entity.Property(e => e.Idtag).HasColumnName("IDTag");
             entity.Property(e => e.Idusuario).HasColumnName("IDUsuario");
-            entity.Property(e => e.IsArchived).HasDefaultValue(false);
             entity.Property(e => e.Texto).HasColumnType("text");
             entity.Property(e => e.Titulo)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
 
             entity.HasOne(d => d.IdtagNavigation).WithMany(p => p.Anotacoes)
                 .HasForeignKey(d => d.Idtag)
-                .HasConstraintName("FK__Anotacoes__IDTag__412EB0B6");
+                .HasConstraintName("FK__Anotacoes__IDTag__66603565");
 
             entity.HasOne(d => d.IdusuarioNavigation).WithMany(p => p.Anotacoes)
                 .HasForeignKey(d => d.Idusuario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Anotacoes__IDUsu__403A8C7D");
+                .HasConstraintName("FK__Anotacoes__IDUsu__656C112C");
+        });
+
+        modelBuilder.Entity<AuditoriaGeral>(entity =>
+        {
+            entity.HasKey(e => e.AuditoriaId).HasName("PK__Auditori__095694E32412991B");
+
+            entity.ToTable("AuditoriaGeral");
+
+            entity.Property(e => e.AuditoriaId).HasColumnName("AuditoriaID");
+            entity.Property(e => e.DataAcao).HasColumnType("datetime");
+            entity.Property(e => e.NomeTabela)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.TipoAcao)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Usuario)
+                .HasMaxLength(100)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Tag>(entity =>
         {
-            entity.HasKey(e => e.Idtag).HasName("PK__Tag__A702375195FD3962");
+            entity.HasKey(e => e.Idtag).HasName("PK__Tag__A7023751ED1D35A0");
 
-            entity.ToTable("Tag");
+            entity.ToTable("Tag", tb => tb.HasTrigger("trg_Audit_Tags"));
 
             entity.Property(e => e.Idtag).HasColumnName("IDTag");
             entity.Property(e => e.Nome)
@@ -79,16 +91,14 @@ public partial class NoteSenaiContext : DbContext
 
         modelBuilder.Entity<Usuario>(entity =>
         {
-            entity.HasKey(e => e.Idusuario).HasName("PK__Usuario__5231116945666C6E");
+            entity.HasKey(e => e.Idusuario).HasName("PK__Usuario__523111693EBCF429");
 
             entity.ToTable("Usuario");
 
-            entity.HasIndex(e => e.Email, "UQ__Usuario__A9D1053468E6046D").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Usuario__A9D10534271641C5").IsUnique();
 
             entity.Property(e => e.Idusuario).HasColumnName("IDUsuario");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+            entity.Property(e => e.CriadorAt).HasColumnType("datetime");
             entity.Property(e => e.Email)
                 .HasMaxLength(80)
                 .IsUnicode(false);
@@ -104,11 +114,6 @@ public partial class NoteSenaiContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
-    }
-
-    internal void FirstOrDefault(Func<object, bool> value)
-    {
-        throw new NotImplementedException();
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

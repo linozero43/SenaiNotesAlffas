@@ -51,7 +51,7 @@ namespace SenaiNotesAlffas.Repositories
         
         public void Cadastrar(CadastrarTagDto tag)
         {
-            Tag novaTag = new Tag
+            var novaTag = new Tag
             {
                 Nome = tag.Nome,
             };
