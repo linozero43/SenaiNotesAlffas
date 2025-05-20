@@ -17,5 +17,5 @@ public partial class Usuario
 
     public DateTime? CriadorAt { get; set; }
 
-    public virtual ICollection<Anotaco> Anotacos { get; set; } = new List<Anotaco>();
+    public virtual ICollection<Anotacao> Anotacoes { get; set; } = new List<Anotacao>();
 }

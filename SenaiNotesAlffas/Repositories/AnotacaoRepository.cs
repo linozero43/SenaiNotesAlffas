@@ -33,7 +33,7 @@ namespace SenaiNotesAlffas.Repositories
 
         public List <Anotacao> BuscarData(DateTime data)
         {
-            var listaDataAnotacoes = _context.Anotacoes.Where(d => d.CreatedAt == data).ToList();
+            var listaDataAnotacoes = _context.Anotacoes.Where(d => d.CriadorAt == data).ToList();
 
             return listaDataAnotacoes;
         }

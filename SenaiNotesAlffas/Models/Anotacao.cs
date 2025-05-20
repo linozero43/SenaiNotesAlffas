@@ -16,15 +16,15 @@ public partial class Anotacao
 
     public string? Texto { get; set; }
 
-    public bool? IsArchived { get; set; }
+    public bool? Arquivado { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? CriadorAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public DateTime? AtualizadorAt { get; set; }
 
     public string Idstatus { get; set; } = null!;
 
     public virtual Tag? IdtagNavigation { get; set; }
 
-    public virtual Usuario? IdusuarioNavigation { get; set; } = null!;
+    public virtual Usuario IdusuarioNavigation { get; set; } = null!;
 }
