@@ -7,8 +7,13 @@ using SenaiNotesAlffas.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-builder.Services.AddControllers();
+// para tirar looping do jadon no listar
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling =
+            Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    });
 builder.Services.AddSwaggerGen();
 
 

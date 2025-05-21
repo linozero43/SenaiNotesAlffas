@@ -34,6 +34,26 @@ namespace SenaiNotesAlffas.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult ListarAnotacao()
+        {
+            return Ok(_anotacaoRepository.ListarTodos());
+        }
+
+        [HttpPut("editar/{id}")]
+        public IActionResult Editar(int id, CadastrarAnotacaoDto anotacao)
+        {
+            var anotacaoAtualizada = _anotacaoRepository.Atualuzar(id, anotacao);
+
+            if (anotacaoAtualizada == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(anotacaoAtualizada);
+        }
+
+
         [HttpGet("/buscar{nome}")]
         public IActionResult BuscarPornome(string nome)
 
@@ -41,19 +61,28 @@ namespace SenaiNotesAlffas.Controllers
             return Ok(_anotacaoRepository.BuscarAnotacaoPorNome(nome));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("/BuscarId{id}")]
         public IActionResult BuscarPorId(int id)
         {
             return Ok(_anotacaoRepository.BuscarPorId(id));
         }
 
-        [HttpGet]
-        public IActionResult ListarCliente()
-        {
-            return Ok(_anotacaoRepository.ListarTodos());
-        }
-
         
+        [HttpDelete("{id}")]
+
+        public IActionResult Deletar(int id)
+        {
+            var anotacaoDeletada = _anotacaoRepository.Deletar(id);
+
+            if (anotacaoDeletada == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(anotacaoDeletada);
+
+
+        }
 
 
     }

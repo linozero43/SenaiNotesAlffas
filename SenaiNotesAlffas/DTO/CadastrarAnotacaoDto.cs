@@ -11,5 +11,7 @@ namespace SenaiNotesAlffas.DTO
 
         public string? Texto { get; set; }
 
+        public string Idstatus { get; set; } = null!;
+
     }
 }

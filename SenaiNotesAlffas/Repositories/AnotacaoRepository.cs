@@ -3,6 +3,7 @@ using SenaiNotesAlffas.Context;
 using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
+using SenaiNotesAlffas.ViewModels;
 
 namespace SenaiNotesAlffas.Repositories
 {
@@ -37,6 +38,7 @@ namespace SenaiNotesAlffas.Repositories
                 Idusuario = anotacao.Idusuario,
                 Titulo = anotacao.Titulo,
                 Texto = anotacao.Texto,
+                Idstatus = anotacao.Idstatus,
             };
 
             _context.Anotacoes.Add(anotacaoCadastrada);
@@ -60,9 +62,25 @@ namespace SenaiNotesAlffas.Repositories
             return listaDataAnotacoes;
         }
 
-        public Anotacao BuscarPorId(int id)
+        public ListarAnotacaoViewModel ListarPorId(int id)
         {
-            return _context.Anotacoes.FirstOrDefault(a => a.Idanotacoes == id);
+            var anotacao = _context.Anotacoes.Find(id);
+            if (anotacao == null)
+            {
+                return null;
+            }
+
+            var anotacaoId = new ListarAnotacaoViewModel
+            {
+                Idanotacoes = anotacao.Idanotacoes,
+                Idusuario = anotacao.Idusuario,
+                Titulo = anotacao.Titulo,
+                Texto = anotacao.Texto,
+                AtualizadorAt = anotacao.AtualizadorAt,
+                Idstatus = anotacao.Idstatus,
+            };
+
+            return anotacaoId;
         }
 
 
@@ -73,10 +91,19 @@ namespace SenaiNotesAlffas.Repositories
             return categoria;
         }
 
-        public List<Anotacao> ListarTodos()
+        public List<ListarAnotacaoViewModel> ListarTodos()
         {
             {
-                return _context.Anotacoes.ToList();
+                return _context.Anotacoes.Select(a => new ListarAnotacaoViewModel
+                {
+                    Idanotacoes = a.Idanotacoes,
+                    Idusuario = a.Idusuario,
+                    Titulo = a.Titulo,
+                    Texto = a.Texto,
+                    AtualizadorAt = a.AtualizadorAt,
+                    Idstatus = a.Idstatus,
+
+                }).ToList();
             }
 
         }

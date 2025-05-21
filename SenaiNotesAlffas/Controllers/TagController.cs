@@ -39,7 +39,7 @@ namespace SenaiNotesAlffas.Controllers
             return Created();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("editar/{id}")]
         public IActionResult Editar(int id, CadastrarTagDto tag)
         {
             try
