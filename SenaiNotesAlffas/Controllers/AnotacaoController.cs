@@ -25,7 +25,7 @@ namespace SenaiNotesAlffas.Controllers
         }
 
         //POST
-        [HttpPost]
+        [HttpPost ("Cadastrar")]
 
         public IActionResult CadastrarAnotacao(CadastrarAnotacaoDto anotacao)
         {
@@ -34,13 +34,13 @@ namespace SenaiNotesAlffas.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("Listar Todos")]
         public IActionResult ListarAnotacao()
         {
             return Ok(_anotacaoRepository.ListarTodos());
         }
 
-        [HttpPut("editar/{id}")]
+        [HttpPut("Editar/{id}")]
         public IActionResult Editar(int id, CadastrarAnotacaoDto anotacao)
         {
             var anotacaoAtualizada = _anotacaoRepository.Atualuzar(id, anotacao);
@@ -54,7 +54,7 @@ namespace SenaiNotesAlffas.Controllers
         }
 
 
-        [HttpGet("/buscar{nome}")]
+        [HttpGet("/Buscar Nome{nome}")]
         public IActionResult BuscarPornome(string nome)
 
         {
@@ -64,7 +64,7 @@ namespace SenaiNotesAlffas.Controllers
         [HttpGet("/BuscarId{id}")]
         public IActionResult BuscarPorId(int id)
         {
-            return Ok(_anotacaoRepository.BuscarPorId(id));
+            return Ok(_anotacaoRepository.ListarPorId(id));
         }
 
         
