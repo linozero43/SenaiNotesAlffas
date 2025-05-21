@@ -41,8 +41,16 @@ namespace SenaiNotesAlffas.Controllers
         [HttpPost]
         public IActionResult Cadastrar(CadastrarUsuarioDto usuario)
         {
-            _repository.Cadastrar(usuario);
-            return Created();
+            try
+            {
+                _repository.Cadastrar(usuario);
+                return Created();
+            }
+            catch (EmailJaCadastradoException)
+            {
+                return Conflict("E-mail informado já está cadastrado.");
+            }
+            
         }
 
         [HttpPut("{id}")]

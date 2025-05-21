@@ -1,4 +1,5 @@
-﻿using SenaiNotesAlffas.Context;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using SenaiNotesAlffas.Context;
 using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
@@ -20,7 +21,9 @@ namespace SenaiNotesAlffas.Repositories
         {
             var usuarioEncontrado = _context.Usuarios.Find(id);
 
-            if(usuarioEncontrado == null)
+            var password = new PasswordService();
+
+            if (usuarioEncontrado == null)
             {
                 return null;
             }
@@ -29,7 +32,9 @@ namespace SenaiNotesAlffas.Repositories
             usuarioEncontrado.Email = usuario.Email;
             usuarioEncontrado.Telefone = usuario.Telefone;
             usuarioEncontrado.Senha = usuario.Senha;
-            
+
+            usuarioEncontrado.Senha = password.HashPassword(usuarioEncontrado);
+
             _context.SaveChanges();
             return usuarioEncontrado;
 
@@ -57,6 +62,8 @@ namespace SenaiNotesAlffas.Repositories
             return null;
         }
 
+
+
         public void Cadastrar(CadastrarUsuarioDto usuario)
         {
             var password = new PasswordService();
@@ -71,8 +78,13 @@ namespace SenaiNotesAlffas.Repositories
 
             usuarioCadastrado.Senha = password.HashPassword(usuarioCadastrado);
 
-            //TODO: tratar erro quando email cadastrado ja existe, firstordefault
-            //var emailCadastrado = _context.Usuarios.FirstOrDefault
+            //tratar erro quando email cadastrado ja existe, firstordefault
+            var emailCadastrado = _context.Usuarios.FirstOrDefault(u => u.Email ==  usuario.Email);
+            
+            if(emailCadastrado != null)
+            {
+                throw new EmailJaCadastradoException("");
+            }
 
             _context.Usuarios.Add(usuarioCadastrado);
             _context.SaveChanges();
