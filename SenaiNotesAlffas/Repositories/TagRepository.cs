@@ -48,15 +48,17 @@ namespace SenaiNotesAlffas.Repositories
             var listaTags = _context.Tags.Where(t => t.Nome == nome).ToList();
             return listaTags;
         }
-        
+
         public void Cadastrar(CadastrarTagDto tag)
         {
-            var novaTag = new Tag
-            {
-                Nome = tag.Nome,
-            };
-            _context.Tags.Add(novaTag);
-            _context.SaveChanges();
+            
+                var novaTag = new Tag
+                {
+                    Nome = tag.Nome,
+                };
+                _context.Tags.Add(novaTag);
+                _context.SaveChanges();
+            
         }
 
         public void Deletar(int id)
@@ -65,7 +67,7 @@ namespace SenaiNotesAlffas.Repositories
             // Caso não encontre o produto, lanço um erro
             if (t == null)
             {
-                throw new Exception();
+                throw new ArgumentNullException();
             }
             // Caso eu encontre o produto, removo ele
             _context.Tags.Remove(t);
