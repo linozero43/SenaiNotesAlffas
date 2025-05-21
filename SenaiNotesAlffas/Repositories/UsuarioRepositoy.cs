@@ -21,7 +21,9 @@ namespace SenaiNotesAlffas.Repositories
         {
             var usuarioEncontrado = _context.Usuarios.Find(id);
 
-            if(usuarioEncontrado == null)
+            var password = new PasswordService();
+
+            if (usuarioEncontrado == null)
             {
                 return null;
             }
@@ -30,7 +32,9 @@ namespace SenaiNotesAlffas.Repositories
             usuarioEncontrado.Email = usuario.Email;
             usuarioEncontrado.Telefone = usuario.Telefone;
             usuarioEncontrado.Senha = usuario.Senha;
-            
+
+            usuarioEncontrado.Senha = password.HashPassword(usuarioEncontrado);
+
             _context.SaveChanges();
             return usuarioEncontrado;
 
@@ -58,6 +62,8 @@ namespace SenaiNotesAlffas.Repositories
             return null;
         }
 
+
+
         public void Cadastrar(CadastrarUsuarioDto usuario)
         {
             var password = new PasswordService();
@@ -77,7 +83,7 @@ namespace SenaiNotesAlffas.Repositories
             
             if(emailCadastrado != null)
             {
-                throw new Exception();
+                throw new EmailJaCadastradoException("");
             }
 
             _context.Usuarios.Add(usuarioCadastrado);
