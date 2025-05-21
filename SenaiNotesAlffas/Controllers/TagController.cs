@@ -63,7 +63,7 @@ namespace SenaiNotesAlffas.Controllers
                 return NoContent();
             }
             //caso der erro 
-            catch (Exception ex)
+            catch (ArgumentNullException ex)
             {
                 return NotFound("Tag não encontrada");
             }
