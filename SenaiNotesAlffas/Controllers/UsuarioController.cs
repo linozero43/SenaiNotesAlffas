@@ -5,6 +5,7 @@ using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
 using SenaiNotesAlffas.Repositories;
 using SenaiNotesAlffas.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace SenaiNotesAlffas.Controllers
 {
@@ -20,12 +21,20 @@ namespace SenaiNotesAlffas.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation(
+            Summary = "Listar usuários",
+            Description = "Lista os usuários cadastrados no sistema."
+            )]
         public IActionResult ListarTodos()
         {
             return Ok(_repository.ListarTodos());
         }
 
         [HttpGet("{id}")]
+        [SwaggerOperation(
+            Summary = "Listar usuário pelo ID",
+            Description = "Retorna o usuário correspondente ao ID informado"
+            )]
         public IActionResult ListarPorId(int id)
         {
             var usuario = _repository.ListarPorId(id);
@@ -39,6 +48,10 @@ namespace SenaiNotesAlffas.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(
+            Summary = "Cadastrar usuário",
+            Description = "Cadastra usuário no sistema"
+            )]
         public IActionResult Cadastrar(CadastrarUsuarioDto usuario)
         {
             try
@@ -54,6 +67,10 @@ namespace SenaiNotesAlffas.Controllers
         }
 
         [HttpPut("{id}")]
+        [SwaggerOperation(
+            Summary = "Editar usuário",
+            Description = "Permite alterar informações do usuário no sistema, a partir de seu ID"
+            )]
 
         public IActionResult Editar(int id, CadastrarUsuarioDto usuario)
         {
@@ -69,6 +86,10 @@ namespace SenaiNotesAlffas.Controllers
 
 
         [HttpDelete("{id}")]
+        [SwaggerOperation(
+            Summary = "Deletar usuário",
+            Description = "Deleta o usuário do sistema, a partir do ID informado"
+            )]
 
         public IActionResult Deletar(int id)
         {
@@ -85,6 +106,10 @@ namespace SenaiNotesAlffas.Controllers
         }
 
         [HttpPost("login")]
+        [SwaggerOperation(
+            Summary = "Login de usuário",
+            Description = "Confere e-mail e senha informados pelo usuário e caso ok, retorna token de acesso"
+            )]
 
         public IActionResult Login(LoginDto login)
         {
