@@ -18,6 +18,6 @@ namespace SenaiNotesAlffas.Interfaces
         void Atualizar(int id, CadastrarTagDto tag);
 
         void Deletar(int id);
-
+        object BuscarTagPorNome(int idusuario, object item);
     }
 }

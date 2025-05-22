@@ -5,6 +5,7 @@ using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
 using SenaiNotesAlffas.Repositories;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace SenaiNotesAlffas.Controllers
 {
@@ -54,21 +55,28 @@ namespace SenaiNotesAlffas.Controllers
         }
 
 
-        [HttpGet("/Buscar Nome{nome}")]
+        [HttpGet]
+        [SwaggerOperation(Summary = "Buscar por nome",
+            Description = "Esse endpoint busca uma anotação pelo nome"
+            )]
         public IActionResult BuscarPornome(string nome)
 
         {
             return Ok(_anotacaoRepository.BuscarAnotacaoPorNome(nome));
         }
 
-        [HttpGet("/BuscarId{id}")]
+        [HttpGet]
+        [SwaggerOperation(Summary = "Buscar por id",
+            Description = "Esse endpoint busca uma anotação pelo id"
+            )]
         public IActionResult BuscarPorId(int id)
         {
             return Ok(_anotacaoRepository.ListarPorId(id));
         }
 
+
         
-        [HttpDelete("{id}")]
+        [HttpDelete]
 
         public IActionResult Deletar(int id)
         {

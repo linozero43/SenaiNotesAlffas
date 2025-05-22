@@ -9,7 +9,14 @@ namespace SenaiNotesAlffas.Repositories
 {
     public class AnotacaoRepository(NoteSenaiContext context) : IAnotacaoRepository
     {
+        private readonly ITagRepository _tagRepository = new TagRepository(context);
+
+        public AnotacaoRepository(NoteSenaiContext context, ITagRepository tagRepository)
+        {
+            _context = context;
+        }
         private readonly NoteSenaiContext _context = context;
+        private object item;
 
         public Anotacao? Atualuzar(int id, CadastrarAnotacaoDto anotacao)
         {
@@ -30,20 +37,28 @@ namespace SenaiNotesAlffas.Repositories
 
         }
 
-        public void Cadastrar(CadastrarAnotacaoDto anotacao)
+        public CadastrarAnotacaoDto? CadastrarAnotacao(CadastrarAnotacaoDto anotacao)
         {
+            //1 percorrer a lista de tags
+            //2 verificar se a tag existe
+            //3 se não existir, cadastrar a tag
+            //4 adicionar a tag na anotacao
+            List<int> idTags = new List<int>();
 
-            Anotacao anotacaoCadastrada = new()
+            foreach (var tag in anotacao.Tags)
             {
-                Idusuario = anotacao.Idusuario,
-                Titulo = anotacao.Titulo,
-                Texto = anotacao.Texto,
-                Idstatus = anotacao.Idstatus,
-            };
 
-            _context.Anotacoes.Add(anotacaoCadastrada);
-            _context.SaveChanges();
-            
+                var tagEncontrada = _tagRepository.BuscarTagPorNome(anotacao.Idusuario, item);
+
+                if (tag == null)
+                { 
+
+                }
+
+            }
+            {
+                
+            }
         }
 
         public List<Anotacao> BuscarAnotacaoPorNome(string nome)
@@ -82,13 +97,27 @@ namespace SenaiNotesAlffas.Repositories
 
             return anotacaoId;
         }
+        public Anotacao? ArquivarAnotacao(int id)
+        {
+            var anotacao = _context.Anotacoes.Find(id);
+            if (anotacao is null) return null;
 
+            anotacao.Arquivado = !anotacao.Arquivado;
+
+            _context.SaveChanges();
+            return anotacao;
+        }
 
         public object? Deletar(int id)
         {
-            var categoria = _context.Anotacoes.Find(id);
-            if (categoria == null) return null;
-            return categoria;
+            var anotacaoDeletada = _context.Anotacoes.Find(id);
+
+            if (anotacaoDeletada == null) return null;
+           
+            _context.Anotacoes.Remove(anotacaoDeletada);
+            _context.SaveChanges();
+
+            return anotacaoDeletada;
         }
 
         public List<ListarAnotacaoViewModel> ListarTodos()

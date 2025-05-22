@@ -9,10 +9,11 @@ namespace SenaiNotesAlffas.Interfaces
         List<ListarAnotacaoViewModel> ListarTodos();
         ListarAnotacaoViewModel ListarPorId(int id);
         List<Anotacao> BuscarData(DateTime data);
-        void Cadastrar(CadastrarAnotacaoDto anotacao);
+        CadastrarAnotacaoDto? CadastrarAnotacao(CadastrarAnotacaoDto anotacao);
         Anotacao? Atualuzar(int id, CadastrarAnotacaoDto anotacao);
         public object? Deletar(int id);
         List<Anotacao> BuscarAnotacaoPorNome(string nome);
+        Anotacao? ArquivarAnotacao(int id);
 
 
 
