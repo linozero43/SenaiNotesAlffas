@@ -65,7 +65,7 @@ namespace SenaiNotesAlffas.Controllers
             return Ok(_anotacaoRepository.BuscarAnotacaoPorNome(nome));
         }
 
-        [HttpPut]
+        [HttpPut("Arquivar/{id}")]
         [SwaggerOperation(Summary = "Arquivar",
             Description = "Esse endpoint arquiva uma anotação"
             )]

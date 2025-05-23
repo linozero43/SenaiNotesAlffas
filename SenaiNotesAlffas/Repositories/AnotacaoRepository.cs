@@ -66,6 +66,9 @@ namespace SenaiNotesAlffas.Repositories
                 }
 
                 idTags.Add(tagEncontrada.Idtag);
+            }
+
+                
 
                 //CADASTRAR ANOTACAO
                 var novaAnotacao = new Anotacao
@@ -93,9 +96,9 @@ namespace SenaiNotesAlffas.Repositories
 
                 //_context.TagAnotacoes.Add(tagAnotacao);
                 //_context.SaveChanges();
+                return anotacao;
 
-                
-            }
+            
 
         }
 
