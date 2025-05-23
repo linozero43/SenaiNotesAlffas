@@ -178,5 +178,10 @@ namespace SenaiNotesAlffas.Repositories
 
         }
 
+        public void Cadastrar(CadastrarAnotacaoDto anotacao)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

@@ -54,12 +54,12 @@ namespace SenaiNotesAlffas.Controllers
 
         }
 
-        [HttpDelete("{tag}")]
-        public IActionResult Deletar(int tag)
+        [HttpDelete("{id}")]
+        public IActionResult Deletar(int id)
         {
             try
             {
-                _tagRepository.Deletar(tag);
+                _tagRepository.Deletar(id);
                 return NoContent();
             }
             //caso der erro 

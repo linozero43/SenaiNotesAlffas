@@ -18,6 +18,7 @@ public partial class NoteSenaiContext : DbContext
     {
         _configuration = config;
     }
+
     public virtual DbSet<Anotacao> Anotacoes { get; set; }
 
     public virtual DbSet<AuditoriaGeral> AuditoriaGerals { get; set; }
@@ -60,6 +61,23 @@ public partial class NoteSenaiContext : DbContext
                 .HasForeignKey(d => d.Idusuario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Anotacoes__IDUsu__656C112C");
+
+            entity.HasMany(d => d.Idtags).WithMany(p => p.Idanotacoes)
+                .UsingEntity<Dictionary<string, object>>(
+                    "AnotacaoTag",
+                    r => r.HasOne<Tag>().WithMany()
+                        .HasForeignKey("Idtag")
+                        .HasConstraintName("FK__AnotacaoT__IDTag__0D7A0286"),
+                    l => l.HasOne<Anotacao>().WithMany()
+                        .HasForeignKey("Idanotacao")
+                        .HasConstraintName("FK__AnotacaoT__IDAno__0C85DE4D"),
+                    j =>
+                    {
+                        j.HasKey("Idanotacao", "Idtag").HasName("PK__Anotacao__4279B88E58235366");
+                        j.ToTable("AnotacaoTag");
+                        j.IndexerProperty<int>("Idanotacao").HasColumnName("IDAnotacao");
+                        j.IndexerProperty<int>("Idtag").HasColumnName("IDTag");
+                    });
         });
 
         modelBuilder.Entity<AuditoriaGeral>(entity =>
