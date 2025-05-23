@@ -42,11 +42,12 @@ namespace SenaiNotesAlffas.Repositories
             }).ToList();
         }
 
-        public List<Tag> BuscarTagPorNome(string nome)
+        public Tag BuscarTagPorNome(string nome)
         {
-            //Where - Traz todos que atendem EXATAMENTE uma Condição 
-            var listaTags = _context.Tags.Where(t => t.Nome == nome).ToList();
-            return listaTags;
+            
+            var listaTags = _context.Tags.Where(t => t.Nome == nome);
+
+            return (Tag)listaTags;
         }
 
         public void Cadastrar(CadastrarTagDto tag)

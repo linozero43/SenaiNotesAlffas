@@ -5,6 +5,7 @@ using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
 using SenaiNotesAlffas.Repositories;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace SenaiNotesAlffas.Controllers
 {
@@ -13,34 +14,37 @@ namespace SenaiNotesAlffas.Controllers
     public class AnotacaoController : ControllerBase
     {
 
-        private readonly NoteSenaiContext _context;
-
         private IAnotacaoRepository _anotacaoRepository;
 
-        public AnotacaoController(NoteSenaiContext context)
+        public AnotacaoController(IAnotacaoRepository anotacaoRepository)
         {
-            _context = context;
-            _anotacaoRepository = new AnotacaoRepository(_context);
+            _anotacaoRepository = anotacaoRepository;
 
         }
 
-        //POST
-        [HttpPost ("Cadastrar")]
+        
+        [HttpPost]
+        [SwaggerOperation(Summary = "Cadastrar",
+            Description = "Esse endpoint cadastra uma anotação"
+            )]
 
         public IActionResult CadastrarAnotacao(CadastrarAnotacaoDto anotacao)
         {
-            _anotacaoRepository.Cadastrar(anotacao);
+            _anotacaoRepository.CadastrarAnotacao(anotacao);
             return Created();
         }
 
 
-        [HttpGet("Listar Todos")]
+        [HttpGet]
         public IActionResult ListarAnotacao()
         {
             return Ok(_anotacaoRepository.ListarTodos());
         }
 
-        [HttpPut("Editar/{id}")]
+        [HttpPut]
+        [SwaggerOperation(Summary = "Editar",
+            Description = "Esse endpoint edita uma anotação"
+            )]
         public IActionResult Editar(int id, CadastrarAnotacaoDto anotacao)
         {
             var anotacaoAtualizada = _anotacaoRepository.Atualuzar(id, anotacao);
@@ -54,22 +58,40 @@ namespace SenaiNotesAlffas.Controllers
         }
 
 
-        [HttpGet("/Buscar Nome{nome}")]
+        [HttpGet("Buscar/{nome}")]
         public IActionResult BuscarPornome(string nome)
 
         {
             return Ok(_anotacaoRepository.BuscarAnotacaoPorNome(nome));
         }
 
-        [HttpGet("/BuscarId{id}")]
+        [HttpPut]
+        [SwaggerOperation(Summary = "Arquivar",
+            Description = "Esse endpoint arquiva uma anotação"
+            )]
+        public IActionResult ArquivarAnotacao(int id)
+        {
+            var anotacaoArquivada = _anotacaoRepository.ArquivarAnotacao(id);
+
+            if (anotacaoArquivada == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(anotacaoArquivada);
+
+        }
+
+        [HttpGet("{id}")]
         public IActionResult BuscarPorId(int id)
         {
             return Ok(_anotacaoRepository.ListarPorId(id));
         }
-
         
-        [HttpDelete("{id}")]
-
+        [HttpDelete("Deletar/{id}")]
+        [SwaggerOperation(Summary = "Deletar",
+            Description = "Esse endpoint deleta uma anotação"
+            )]
         public IActionResult Deletar(int id)
         {
             var anotacaoDeletada = _anotacaoRepository.Deletar(id);

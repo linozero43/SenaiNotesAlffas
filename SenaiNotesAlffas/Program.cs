@@ -14,7 +14,10 @@ builder.Services.AddControllers()
         options.SerializerSettings.ReferenceLoopHandling =
             Newtonsoft.Json.ReferenceLoopHandling.Ignore;
     });
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.EnableAnnotations();
+});
 
 
 builder.Services.AddDbContext<NoteSenaiContext>();
@@ -30,7 +33,7 @@ builder.Services.AddCors(
             policy =>
             {
                 //TODO: Alterar link
-                policy.WithOrigins("http://localhost:5500");
+                policy.WithOrigins("http://localhost:5173", "http://localhost:5173");
                 policy.AllowAnyHeader();
                 policy.AllowAnyMethod();
             }
