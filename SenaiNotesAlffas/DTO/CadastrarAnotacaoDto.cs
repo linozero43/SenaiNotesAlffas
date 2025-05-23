@@ -13,12 +13,6 @@ namespace SenaiNotesAlffas.DTO
 
         public string? Texto { get; set; }
 
-        public bool? Arquivado { get; set; }
-
-        public DateTime? CriadorAt { get; set; }
-
-        public DateTime? AtualizadorAt { get; set; }
-
         public List<string> Tags { get; set; } 
 
     }

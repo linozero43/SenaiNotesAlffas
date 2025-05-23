@@ -7,16 +7,17 @@ using SenaiNotesAlffas.ViewModels;
 
 namespace SenaiNotesAlffas.Repositories
 {
-    public class AnotacaoRepository(NoteSenaiContext context) : IAnotacaoRepository
-    {
-        private readonly ITagRepository _tagRepository = new TagRepository(context);
-
+    public class AnotacaoRepository : IAnotacaoRepository
+    
+ {
+        private readonly ITagRepository _tagRepository;
+        public readonly NoteSenaiContext _context;
+        
         public AnotacaoRepository(NoteSenaiContext context, ITagRepository tagRepository)
         {
+            _tagRepository = tagRepository; 
             _context = context;
         }
-        private readonly NoteSenaiContext _context = context;
-        private object item;
 
         public Anotacao? Atualuzar(int id, CadastrarAnotacaoDto anotacao)
         {
@@ -45,20 +46,57 @@ namespace SenaiNotesAlffas.Repositories
             //4 adicionar a tag na anotacao
             List<int> idTags = new List<int>();
 
+            //PERCORRO A LISTA DE TAGS, PROCURO SE A TAG EXISTE
+            // SE NÃO EXISTE CADASTRO A TAG
             foreach (var tag in anotacao.Tags)
             {
-
-                var tagEncontrada = _tagRepository.BuscarTagPorNome(anotacao.Idusuario, item);
+                //PROCURO A TAG POR NOME
+                var tagEncontrada = _tagRepository.BuscarTagPorNome(tag);
 
                 if (tag == null)
-                { 
+                {
 
+                    tagEncontrada = new Tag
+                    {
+                        Nome = tag,
+                    };
+
+                    _context.Tags.Add(tagEncontrada);
+                    _context.SaveChanges();
                 }
 
-            }
-            {
+                idTags.Add(tagEncontrada.Idtag);
+
+                //CADASTRAR ANOTACAO
+                var novaAnotacao = new Anotacao
+                {
+                    Idusuario = anotacao.Idusuario,
+                    Titulo = anotacao.Titulo,
+                    Texto = anotacao.Texto,
+                    CriadorAt = DateTime.Now,
+                    AtualizadorAt = DateTime.Now,
+                    Arquivado = false,
+                };
+
+
+
+                _context.Anotacoes.Add(novaAnotacao);
+                _context.SaveChanges();
+
+                //foreach (var id in idTags)
+
+                //    var tagAnotacao = new TagAnotacao
+                //    {
+                //        Idanotacoes = novaAnotacao.Idanotacoes,
+                //        Idtag = tag
+                //    };
+
+                //_context.TagAnotacoes.Add(tagAnotacao);
+                //_context.SaveChanges();
+
                 
             }
+
         }
 
         public List<Anotacao> BuscarAnotacaoPorNome(string nome)
