@@ -5,7 +5,6 @@ namespace SenaiNotesAlffas.Models;
 
 public partial class Anotacao
 {
-
     public int Idanotacoes { get; set; }
 
     public int Idusuario { get; set; }
@@ -27,4 +26,6 @@ public partial class Anotacao
     public virtual Tag? IdtagNavigation { get; set; }
 
     public virtual Usuario IdusuarioNavigation { get; set; } = null!;
+
+    public virtual ICollection<Tag> Idtags { get; set; } = new List<Tag>();
 }

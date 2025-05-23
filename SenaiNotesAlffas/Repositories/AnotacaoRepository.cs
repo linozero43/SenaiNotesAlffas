@@ -94,7 +94,7 @@ namespace SenaiNotesAlffas.Repositories
                 //_context.TagAnotacoes.Add(tagAnotacao);
                 //_context.SaveChanges();
 
-                
+
             }
 
         }
@@ -173,6 +173,11 @@ namespace SenaiNotesAlffas.Repositories
                 }).ToList();
             }
 
+        }
+
+        public void Cadastrar(CadastrarAnotacaoDto anotacao)
+        {
+            throw new NotImplementedException();
         }
 
     }
