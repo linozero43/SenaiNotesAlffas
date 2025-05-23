@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SenaiNotesAlffas.Context;
 using SenaiNotesAlffas.DTO;
 using SenaiNotesAlffas.Interfaces;
 using SenaiNotesAlffas.Models;
 using SenaiNotesAlffas.Repositories;
 using SenaiNotesAlffas.Services;
+using SenaiNotesAlffas.ViewModels;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SenaiNotesAlffas.Controllers
@@ -14,10 +16,13 @@ namespace SenaiNotesAlffas.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioRepository _repository;
+        private readonly NoteSenaiContext _context;
 
-        public UsuarioController(IUsuarioRepository repository)
+       
+        public UsuarioController(IUsuarioRepository repository, NoteSenaiContext context)
         {
             _repository = repository;
+            _context = context;
         }
 
         [HttpGet]
@@ -108,12 +113,13 @@ namespace SenaiNotesAlffas.Controllers
         [HttpPost("login")]
         [SwaggerOperation(
             Summary = "Login de usuário",
-            Description = "Confere e-mail e senha informados pelo usuário e caso ok, retorna token de acesso"
+            Description = "Confere e-mail e senha informados pelo usuário e caso ok, retorna token de acesso e usuário"
             )]
 
-        public IActionResult Login(LoginDto login)
+        public IActionResult Login(LoginDto login, int id)
         {
             var usuario = _repository.BuscarPorEmailSenha(login.Email, login.Senha);
+            var usuarioEncontrado = _repository.ListarPorId(id);            
 
             if (usuario == null)
             {
@@ -124,7 +130,10 @@ namespace SenaiNotesAlffas.Controllers
 
             var token = tokenService.GenerateToken(usuario.Email);
 
-            return Ok(token);
+            var resposta = new List<object>{usuarioEncontrado, token};
+
+            return Ok(resposta);
+           
         }
     }
 
