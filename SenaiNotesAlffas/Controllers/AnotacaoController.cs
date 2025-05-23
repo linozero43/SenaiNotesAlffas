@@ -36,6 +36,9 @@ namespace SenaiNotesAlffas.Controllers
 
 
         [HttpGet]
+        [SwaggerOperation(Summary = "Listar",
+            Description = "Esse endpoint lista todas as anotações"
+            )]
         public IActionResult ListarAnotacao()
         {
             return Ok(_anotacaoRepository.ListarTodos());
@@ -59,6 +62,9 @@ namespace SenaiNotesAlffas.Controllers
 
 
         [HttpGet("Buscar/{nome}")]
+        [SwaggerOperation(Summary = "BuscarPorNome",
+            Description = "Esse endpoint busca uma anotação pelo nome"
+            )]
         public IActionResult BuscarPornome(string nome)
 
         {
@@ -83,6 +89,9 @@ namespace SenaiNotesAlffas.Controllers
         }
 
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "BuscarPorId",
+            Description = "Esse endpoint busca uma anotação pelo id"
+            )]
         public IActionResult BuscarPorId(int id)
         {
             return Ok(_anotacaoRepository.ListarPorId(id));
