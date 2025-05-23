@@ -110,7 +110,7 @@ namespace SenaiNotesAlffas.Controllers
 
         }
 
-        [HttpPost("login")]
+        [HttpPost("login/{id}")]
         [SwaggerOperation(
             Summary = "Login de usuário",
             Description = "Confere e-mail e senha informados pelo usuário e caso ok, retorna token de acesso e usuário"
