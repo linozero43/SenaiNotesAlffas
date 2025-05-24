@@ -10,7 +10,7 @@ namespace SenaiNotesAlffas.Interfaces
         Tag BuscarPorId(int id);
 
         List<ListarTagViewModel> ListarTodos();
-        List<Tag> BuscarTagPorNome(string nome);
+        Tag BuscarTagPorNome(string nome);
 
         void Cadastrar(CadastrarTagDto tag);
 

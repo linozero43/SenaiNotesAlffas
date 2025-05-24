@@ -8,14 +8,14 @@ using SenaiNotesAlffas.ViewModels;
 namespace SenaiNotesAlffas.Repositories
 {
     public class AnotacaoRepository : IAnotacaoRepository
-    
- {
+
+    {
         private readonly ITagRepository _tagRepository;
         public readonly NoteSenaiContext _context;
-        
+
         public AnotacaoRepository(NoteSenaiContext context, ITagRepository tagRepository)
         {
-            _tagRepository = tagRepository; 
+            _tagRepository = tagRepository;
             _context = context;
         }
 
@@ -32,7 +32,7 @@ namespace SenaiNotesAlffas.Repositories
             anotacaoEncontrada.Idusuario = anotacao.Idusuario;
             anotacaoEncontrada.Titulo = anotacao.Titulo;
             anotacaoEncontrada.Texto = anotacao.Texto;
-    
+
             _context.SaveChanges();
             return anotacaoEncontrada;
 
@@ -44,7 +44,7 @@ namespace SenaiNotesAlffas.Repositories
             //2 verificar se a tag existe
             //3 se não existir, cadastrar a tag
             //4 adicionar a tag na anotacao
-            List<int> idTags = new List<int>();
+            List<Tag> tags = new List<Tag>();
 
             //PERCORRO A LISTA DE TAGS, PROCURO SE A TAG EXISTE
             // SE NÃO EXISTE CADASTRO A TAG
@@ -65,53 +65,41 @@ namespace SenaiNotesAlffas.Repositories
                     _context.SaveChanges();
                 }
 
-                idTags.Add(tagEncontrada.Idtag);
+                tags.Add(tagEncontrada);
             }
-
-                
-
-                //CADASTRAR ANOTACAO
-                var novaAnotacao = new Anotacao
-                {
-                    Idusuario = anotacao.Idusuario,
-                    Titulo = anotacao.Titulo,
-                    Texto = anotacao.Texto,
-                    CriadorAt = DateTime.Now,
-                    AtualizadorAt = DateTime.Now,
-                    Arquivado = false,
-                };
+            //CADASTRAR ANOTACAO
+            var novaAnotacao = new Anotacao
+            {
+                Idusuario = anotacao.Idusuario,
+                Titulo = anotacao.Titulo,
+                Texto = anotacao.Texto,
+                CriadorAt = DateTime.Now,
+                AtualizadorAt = DateTime.Now,
+                Arquivado = false,
+            };
 
 
 
-                _context.Anotacoes.Add(novaAnotacao);
-                _context.SaveChanges();
-
-                //foreach (var id in idTags)
-
-                //    var tagAnotacao = new TagAnotacao
-                //    {
-                //        Idanotacoes = novaAnotacao.Idanotacoes,
-                //        Idtag = tag
-                //    };
-
-                //_context.TagAnotacoes.Add(tagAnotacao);
-                //_context.SaveChanges();
-                return anotacao;
+            _context.Anotacoes.Add(novaAnotacao);
+            _context.SaveChanges();
 
             
+            return anotacao;
 
         }
+
+
 
         public List<Anotacao> BuscarAnotacaoPorNome(string nome)
         {
             {
-                var listaAnotacoes = _context.Anotacoes.Where( n => n.Titulo == nome).ToList();
+                var listaAnotacoes = _context.Anotacoes.Where(n => n.Titulo == nome).ToList();
 
                 return listaAnotacoes;
             }
         }
 
-        public List <Anotacao> BuscarData(DateTime data)
+        public List<Anotacao> BuscarData(DateTime data)
         {
             var listaDataAnotacoes = _context.Anotacoes.Where(d => d.CriadorAt == data).ToList();
 
@@ -154,7 +142,7 @@ namespace SenaiNotesAlffas.Repositories
             var anotacaoDeletada = _context.Anotacoes.Find(id);
 
             if (anotacaoDeletada == null) return null;
-           
+
             _context.Anotacoes.Remove(anotacaoDeletada);
             _context.SaveChanges();
 
@@ -178,10 +166,6 @@ namespace SenaiNotesAlffas.Repositories
 
         }
 
-        public void Cadastrar(CadastrarAnotacaoDto anotacao)
-        {
-            throw new NotImplementedException();
-        }
-
+    
     }
 }
