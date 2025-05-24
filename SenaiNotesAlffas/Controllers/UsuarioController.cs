@@ -116,7 +116,7 @@ namespace SenaiNotesAlffas.Controllers
             Description = "Confere e-mail e senha informados pelo usuário e caso ok, retorna token de acesso e usuário"
             )]
 
-        public IActionResult Login(LoginDto login, ListarUsuarioViewModel usuarioViewModel)
+        public IActionResult Login(LoginDto login)
         {
             var usuario = _repository.BuscarPorEmailSenha(login.Email, login.Senha);
                                     
@@ -130,10 +130,18 @@ namespace SenaiNotesAlffas.Controllers
 
             var token = tokenService.GenerateToken(usuario.Email);
 
+            var listarUsuario = new ListarUsuarioViewModel
+            {
+                Idusuario = usuario.Idusuario,
+                Nome = usuario.Nome,
+                Email = usuario.Email,
+                Telefone = usuario.Telefone
+            };
+
             return Ok(new
             {
                 token,
-                usuario
+                listarUsuario
             });
            
         }
