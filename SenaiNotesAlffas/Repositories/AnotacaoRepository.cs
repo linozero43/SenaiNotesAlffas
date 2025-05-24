@@ -44,7 +44,7 @@ namespace SenaiNotesAlffas.Repositories
             //2 verificar se a tag existe
             //3 se não existir, cadastrar a tag
             //4 adicionar a tag na anotacao
-            List<int> idTags = new List<int>();
+            List<Tag> tags = new List<Tag>();
 
             //PERCORRO A LISTA DE TAGS, PROCURO SE A TAG EXISTE
             // SE NÃO EXISTE CADASTRO A TAG
@@ -53,7 +53,7 @@ namespace SenaiNotesAlffas.Repositories
                 //PROCURO A TAG POR NOME
                 var tagEncontrada = _tagRepository.BuscarTagPorNome(tag);
 
-                if (tag == null)
+                if (tagEncontrada == null)
                 {
 
                     tagEncontrada = new Tag
@@ -65,7 +65,7 @@ namespace SenaiNotesAlffas.Repositories
                     _context.SaveChanges();
                 }
 
-                idTags.Add(tagEncontrada.Idtag);
+                tags.Add(tagEncontrada);
             }
 
                 
@@ -79,6 +79,9 @@ namespace SenaiNotesAlffas.Repositories
                     CriadorAt = DateTime.Now,
                     AtualizadorAt = DateTime.Now,
                     Arquivado = false,
+                    Idtags = tags,
+                    Idstatus = "Pendente"
+
                 };
 
 
@@ -86,17 +89,7 @@ namespace SenaiNotesAlffas.Repositories
                 _context.Anotacoes.Add(novaAnotacao);
                 _context.SaveChanges();
 
-                //foreach (var id in idTags)
-
-                //    var tagAnotacao = new TagAnotacao
-                //    {
-                //        Idanotacoes = novaAnotacao.Idanotacoes,
-                //        Idtag = tag
-                //    };
-
-                //_context.TagAnotacoes.Add(tagAnotacao);
-                //_context.SaveChanges();
-                return anotacao;
+            return anotacao;
 
             
 
