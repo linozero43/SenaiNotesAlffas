@@ -53,7 +53,7 @@ namespace SenaiNotesAlffas.Repositories
                 //PROCURO A TAG POR NOME
                 var tagEncontrada = _tagRepository.BuscarTagPorNome(tag);
 
-                if (tag == null)
+                if (tagEncontrada == null)
                 {
 
                     tagEncontrada = new Tag
@@ -67,23 +67,28 @@ namespace SenaiNotesAlffas.Repositories
 
                 tags.Add(tagEncontrada);
             }
-            //CADASTRAR ANOTACAO
-            var novaAnotacao = new Anotacao
-            {
-                Idusuario = anotacao.Idusuario,
-                Titulo = anotacao.Titulo,
-                Texto = anotacao.Texto,
-                CriadorAt = DateTime.Now,
-                AtualizadorAt = DateTime.Now,
-                Arquivado = false,
-            };
+
+                
+
+                //CADASTRAR ANOTACAO
+                var novaAnotacao = new Anotacao
+                {
+                    Idusuario = anotacao.Idusuario,
+                    Titulo = anotacao.Titulo,
+                    Texto = anotacao.Texto,
+                    CriadorAt = DateTime.Now,
+                    AtualizadorAt = DateTime.Now,
+                    Arquivado = false,
+                    Idtags = tags,
+                    Idstatus = "Pendente"
+
+                };
 
 
 
             _context.Anotacoes.Add(novaAnotacao);
             _context.SaveChanges();
 
-            
             return anotacao;
 
         }

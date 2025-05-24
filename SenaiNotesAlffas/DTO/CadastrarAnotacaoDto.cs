@@ -7,8 +7,6 @@ namespace SenaiNotesAlffas.DTO
 
         public int Idusuario { get; set; }
 
-        public int? Idtag { get; set; }
-
         public string Titulo { get; set; } = null!;
 
         public string? Texto { get; set; }
