@@ -8,14 +8,14 @@ using SenaiNotesAlffas.ViewModels;
 namespace SenaiNotesAlffas.Repositories
 {
     public class AnotacaoRepository : IAnotacaoRepository
-    
- {
+
+    {
         private readonly ITagRepository _tagRepository;
         public readonly NoteSenaiContext _context;
-        
+
         public AnotacaoRepository(NoteSenaiContext context, ITagRepository tagRepository)
         {
-            _tagRepository = tagRepository; 
+            _tagRepository = tagRepository;
             _context = context;
         }
 
@@ -32,7 +32,7 @@ namespace SenaiNotesAlffas.Repositories
             anotacaoEncontrada.Idusuario = anotacao.Idusuario;
             anotacaoEncontrada.Titulo = anotacao.Titulo;
             anotacaoEncontrada.Texto = anotacao.Texto;
-    
+
             _context.SaveChanges();
             return anotacaoEncontrada;
 
@@ -86,25 +86,25 @@ namespace SenaiNotesAlffas.Repositories
 
 
 
-                _context.Anotacoes.Add(novaAnotacao);
-                _context.SaveChanges();
+            _context.Anotacoes.Add(novaAnotacao);
+            _context.SaveChanges();
 
             return anotacao;
 
-            
-
         }
+
+
 
         public List<Anotacao> BuscarAnotacaoPorNome(string nome)
         {
             {
-                var listaAnotacoes = _context.Anotacoes.Where( n => n.Titulo == nome).ToList();
+                var listaAnotacoes = _context.Anotacoes.Where(n => n.Titulo == nome).ToList();
 
                 return listaAnotacoes;
             }
         }
 
-        public List <Anotacao> BuscarData(DateTime data)
+        public List<Anotacao> BuscarData(DateTime data)
         {
             var listaDataAnotacoes = _context.Anotacoes.Where(d => d.CriadorAt == data).ToList();
 
@@ -147,7 +147,7 @@ namespace SenaiNotesAlffas.Repositories
             var anotacaoDeletada = _context.Anotacoes.Find(id);
 
             if (anotacaoDeletada == null) return null;
-           
+
             _context.Anotacoes.Remove(anotacaoDeletada);
             _context.SaveChanges();
 
@@ -171,10 +171,6 @@ namespace SenaiNotesAlffas.Repositories
 
         }
 
-        public void Cadastrar(CadastrarAnotacaoDto anotacao)
-        {
-            throw new NotImplementedException();
-        }
-
+    
     }
 }

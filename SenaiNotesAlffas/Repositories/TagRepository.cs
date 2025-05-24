@@ -45,21 +45,21 @@ namespace SenaiNotesAlffas.Repositories
         public Tag BuscarTagPorNome(string nome)
         {
             
-            var listaTags = _context.Tags.FirstOrDefault(t => t.Nome == nome);
+            var listaTags = _context.Tags.Include(t => t.Idanotacoes).FirstOrDefault(t => t.Nome == nome);
 
             return listaTags;
         }
 
         public void Cadastrar(CadastrarTagDto tag)
         {
-            
-                var novaTag = new Tag
-                {
-                    Nome = tag.Nome,
-                };
-                _context.Tags.Add(novaTag);
-                _context.SaveChanges();
-            
+
+            var novaTag = new Tag
+            {
+                Nome = tag.Nome,
+            };
+            _context.Tags.Add(novaTag);
+            _context.SaveChanges();
+
         }
 
         public void Deletar(int id)
