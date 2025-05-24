@@ -45,7 +45,7 @@ namespace SenaiNotesAlffas.Repositories
         public Tag BuscarTagPorNome(string nome)
         {
             
-            var listaTags = _context.Tags.FirstOrDefault(t => t.Nome == nome);
+            var listaTags = _context.Tags.Include(t => t.Idanotacoes).FirstOrDefault(t => t.Nome == nome);
 
             return listaTags;
         }
