@@ -110,16 +110,16 @@ namespace SenaiNotesAlffas.Controllers
 
         }
 
-        [HttpPost("login/{id}")]
+        [HttpPost("login")]
         [SwaggerOperation(
             Summary = "Login de usuário",
             Description = "Confere e-mail e senha informados pelo usuário e caso ok, retorna token de acesso e usuário"
             )]
 
-        public IActionResult Login(LoginDto login, int id)
+        public IActionResult Login(LoginDto login, ListarUsuarioViewModel usuarioViewModel)
         {
             var usuario = _repository.BuscarPorEmailSenha(login.Email, login.Senha);
-            var usuarioEncontrado = _repository.ListarPorId(id);            
+                                    
 
             if (usuario == null)
             {
@@ -130,9 +130,11 @@ namespace SenaiNotesAlffas.Controllers
 
             var token = tokenService.GenerateToken(usuario.Email);
 
-            var resposta = new List<object>{usuarioEncontrado, token};
-
-            return Ok(resposta);
+            return Ok(new
+            {
+                token,
+                usuario
+            });
            
         }
     }
