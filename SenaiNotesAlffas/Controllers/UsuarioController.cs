@@ -98,17 +98,23 @@ namespace SenaiNotesAlffas.Controllers
 
         public IActionResult Deletar(int id)
         {
-            var usuarioDeletado = _repository.Deletar(id);
-
-            if (usuarioDeletado == null)
+            try
             {
-                return NotFound();
+                var usuarioDeletado = _repository.Deletar(id);
+
+                if (usuarioDeletado == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(usuarioDeletado);
             }
-
-            return Ok(usuarioDeletado);
-
-
+            catch (DeletarUsuarioException)
+            {
+                return Conflict("Não foi possível excluir usuário.");
+            }
         }
+
 
         [HttpPost("login")]
         [SwaggerOperation(

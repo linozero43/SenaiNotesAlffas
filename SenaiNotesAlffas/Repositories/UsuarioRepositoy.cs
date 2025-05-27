@@ -92,18 +92,21 @@ namespace SenaiNotesAlffas.Repositories
 
         public Usuario? Deletar(int id)
         {
-            var usuarioEncontrado = _context.Usuarios.Find(id);
+            
+                var usuarioEncontrado = _context.Usuarios.Find(id);
 
-            if (usuarioEncontrado == null)
-            {
-                return null;
-            }
+                if (usuarioEncontrado == null)
+                {
+                    throw new DeletarUsuarioException("");
+                }
 
-            _context.Usuarios.Remove(usuarioEncontrado);
-            _context.SaveChanges();
+                _context.Usuarios.Remove(usuarioEncontrado);
+                _context.SaveChanges();
 
-            return usuarioEncontrado;
-        }
+                return usuarioEncontrado;
+        }        
+            
+        
 
         public ListarUsuarioViewModel? ListarPorId(int id)
         {

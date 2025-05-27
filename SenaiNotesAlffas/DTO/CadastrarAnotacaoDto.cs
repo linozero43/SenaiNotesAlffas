@@ -11,6 +11,8 @@ namespace SenaiNotesAlffas.DTO
 
         public string? Texto { get; set; }
 
+        //public IFormFile? ArquivoAnotacao { get; set; }
+
         public List<string> Tags { get; set; } 
 
     }

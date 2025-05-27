@@ -21,7 +21,6 @@ namespace SenaiNotesAlffas.Controllers
             _anotacaoRepository = anotacaoRepository;
 
         }
-
         
         [HttpPost]
         [SwaggerOperation(Summary = "Cadastrar",
@@ -33,6 +32,43 @@ namespace SenaiNotesAlffas.Controllers
             _anotacaoRepository.CadastrarAnotacao(anotacao);
             return Created();
         }
+
+
+
+        /*[HttpPost]
+        [SwaggerOperation(Summary = "Cadastrar",
+            Description = "Esse endpoint cadastra uma anotação com imagem"
+            )]
+
+        public IActionResult CadastrarAnotacaoComImagem(CadastrarAnotacaoDto anotacao)
+        {
+            if (anotacao.ArquivoAnotacao != null)
+            {
+                //extra - verificar se o arquivo recebido é uma imagem
+
+                // 1 criar uma variavel que sera a pasta destino
+                var pastaDestino = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+
+                //2 Salvar o arquivo
+                //extra - criar um nome personalizado para o arquivo
+                var nomeArquivo = anotacao.ArquivoAnotacao.FileName;
+
+                var caminhoCompleto = Path.Combine(pastaDestino, nomeArquivo);
+
+                using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+                {
+                    anotacao.ArquivoAnotacao.CopyTo(stream);
+                }
+
+                // 3 Guardar o local do arquivo no Banco de dados
+                //Caminho no BD que sera salvo (nao criamos)
+                //anotacao.ImagemAnotacao = nomeArquivo;
+            }
+
+
+            _anotacaoRepository.CadastrarAnotacao(anotacao);
+            return Created();
+        }*/
 
 
         [HttpGet]
