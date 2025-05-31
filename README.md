@@ -4,7 +4,7 @@
 a mesma se perde nas anotações e compromissos diarios,sem organiação para as tarefas, então a ideia foi criar um aplicativo de notas que facilite a rotina e organização
 das tarefas dirias.
 O aplicativo precisa ser cleam, de facil uso com poucas telas para faciliar a adoção e uso.
-Essa API foi criada com padrão MVCe linguagem C#** 
+Essa API foi criada com padrão MVC e linguagem C#** 
 
 ## 🚀 Funcionalidades
 Criação de notas
